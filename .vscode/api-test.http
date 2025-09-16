@@ -1,0 +1,138 @@
+### Tiger Options Trading Service API Tests
+### 使用 REST Client 扩展进行API测试和调试
+
+@baseUrl = http://localhost:8000
+@accountName = account_chu
+
+### 1. 健康检查
+GET {{baseUrl}}/health
+
+### 2. 获取账户列表
+GET {{baseUrl}}/api/accounts
+
+### 3. 测试账户连接
+GET {{baseUrl}}/api/accounts/{{accountName}}/test-connection
+
+### 4. 获取账户信息
+GET {{baseUrl}}/api/accounts/{{accountName}}/info
+
+### 5. 获取账户摘要
+GET {{baseUrl}}/api/trading/account/{{accountName}}/summary
+
+### 6. 获取持仓信息
+GET {{baseUrl}}/api/trading/positions/{{accountName}}
+
+### 7. 获取订单信息
+GET {{baseUrl}}/api/trading/orders/{{accountName}}
+
+### 8. 搜索股票 - AAPL
+GET {{baseUrl}}/api/market/search/AAPL?account_name={{accountName}}&limit=5
+
+### 9. 搜索股票 - TSLA
+GET {{baseUrl}}/api/market/search/TSLA?account_name={{accountName}}&limit=3
+
+### 10. 获取期权到期日 - AAPL
+GET {{baseUrl}}/api/market/option-expirations/AAPL?account_name={{accountName}}
+
+### 11. 发送买入信号 (Webhook)
+POST {{baseUrl}}/webhook/signal/{{accountName}}
+Content-Type: application/json
+
+{
+    "signal_id": "debug_buy_001",
+    "symbol": "AAPL",
+    "action": "buy",
+    "quantity": 1,
+    "price": 150.50,
+    "order_type": "limit",
+    "time_in_force": "day",
+    "strategy": "debug_test",
+    "comment": "VSCode调试测试 - 买入信号"
+}
+
+### 12. 发送卖出信号 (Webhook)
+POST {{baseUrl}}/webhook/signal/{{accountName}}
+Content-Type: application/json
+
+{
+    "signal_id": "debug_sell_001",
+    "symbol": "AAPL",
+    "action": "sell",
+    "quantity": 1,
+    "price": 155.00,
+    "order_type": "limit",
+    "time_in_force": "day",
+    "strategy": "debug_test",
+    "comment": "VSCode调试测试 - 卖出信号"
+}
+
+### 13. 发送平仓信号 (Webhook)
+POST {{baseUrl}}/webhook/signal/{{accountName}}
+Content-Type: application/json
+
+{
+    "signal_id": "debug_close_001",
+    "symbol": "AAPL",
+    "action": "close",
+    "quantity": 1,
+    "order_type": "market",
+    "strategy": "debug_test",
+    "comment": "VSCode调试测试 - 平仓信号"
+}
+
+### 14. 获取队列状态
+GET {{baseUrl}}/webhook/queue/status
+
+### 15. 处理队列
+POST {{baseUrl}}/webhook/queue/process
+
+### 16. 获取队列历史
+GET {{baseUrl}}/webhook/queue/history?limit=10
+
+### 17. 清空队列
+DELETE {{baseUrl}}/webhook/queue/clear
+
+### 18. 测试复杂期权信号
+POST {{baseUrl}}/webhook/signal/{{accountName}}
+Content-Type: application/json
+
+{
+    "signal_id": "debug_option_001",
+    "symbol": "AAPL",
+    "action": "buy",
+    "quantity": 2,
+    "price": 5.50,
+    "order_type": "limit",
+    "time_in_force": "day",
+    "strategy": "option_debug",
+    "option_type": "call",
+    "strike_price": 150.0,
+    "expiration_date": "2025-01-17",
+    "comment": "VSCode调试测试 - 期权买入"
+}
+
+### 19. 获取API文档
+GET {{baseUrl}}/docs
+
+### 20. 获取根路径信息
+GET {{baseUrl}}/
+
+### 21. 测试错误处理 - 无效账户
+GET {{baseUrl}}/api/accounts/invalid_account/info
+
+### 22. 测试错误处理 - 无效信号
+POST {{baseUrl}}/webhook/signal/{{accountName}}
+Content-Type: application/json
+
+{
+    "invalid_field": "test"
+}
+
+### 23. 获取市场健康状态
+GET {{baseUrl}}/api/market/health
+
+### 24. 获取交易健康状态
+GET {{baseUrl}}/api/trading/health
+
+### 25. 获取Webhook健康状态
+GET {{baseUrl}}/webhook/health
