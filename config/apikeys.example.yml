@@ -1,0 +1,86 @@
+# Tiger Brokers API Keys Configuration
+# Copy this file to apikeys.yml and fill in your actual API credentials
+
+accounts:
+  # Primary trading account
+  - name: account_1
+    description: "Primary trading account"
+    # Tiger API credentials from https://quant.itiger.com/#openapi
+    tiger_id: "your_tiger_id_here"          # Your Tiger ID
+    private_key_path: "path/to/your/private_key.pem"  # Path to your private key file
+    account: "your_account_number_here"     # Your account number (e.g., DU123456)
+    enabled: true
+    
+    # Environment settings
+    sandbox_debug: true                     # true for test environment, false for production
+    language: "en_US"                       # Language setting: en_US, zh_CN, zh_TW
+    
+    # Trading settings
+    default_currency: "USD"                 # Default currency for trading
+    max_position_size: 1000                 # Maximum position size
+    risk_level: "conservative"              # Risk level: conservative, moderate, aggressive
+    
+    # Notification settings (optional)
+    notifications:
+      webhook_url: "https://your-webhook-url.com/notify"
+      timeout: 10000                        # Request timeout in milliseconds
+      retry_count: 3                        # Number of retry attempts
+      retry_delay: 1000                     # Delay between retries in milliseconds
+      enabled: true                         # Whether to enable notifications
+    
+  # Secondary trading account (disabled by default)
+  - name: account_2
+    description: "Secondary trading account"
+    tiger_id: "your_second_tiger_id_here"
+    private_key_path: "path/to/your/second_private_key.pem"
+    account: "your_second_account_number_here"
+    enabled: false
+    sandbox_debug: true
+    language: "en_US"
+    
+    # Trading settings
+    default_currency: "USD"
+    max_position_size: 500
+    risk_level: "moderate"
+    
+    # Notification settings
+    notifications:
+      enabled: false
+    
+  # Production account example (commented out for safety)
+  # - name: production_account
+  #   description: "Production trading account"
+  #   tiger_id: "prod_tiger_id_here"
+  #   private_key_path: "path/to/prod_private_key.pem"
+  #   account: "prod_account_number_here"
+  #   enabled: false
+  #   sandbox_debug: false                  # IMPORTANT: false for production
+  #   language: "en_US"
+  #   
+  #   # Trading settings
+  #   default_currency: "USD"
+  #   max_position_size: 10000
+  #   risk_level: "moderate"
+
+# Global settings
+settings:
+  # Default connection timeout in seconds
+  connection_timeout: 30
+  
+  # Reconnect attempts for connections
+  max_reconnect_attempts: 5
+  
+  # Rate limiting (requests per minute)
+  rate_limit_per_minute: 60
+  
+  # Default order settings
+  default_order_type: "limit"              # limit, market, stop, stop_limit
+  default_time_in_force: "day"             # day, gtc, ioc, fok
+  
+  # Risk management
+  global_max_daily_loss: 10000             # Maximum daily loss across all accounts
+  global_max_position_exposure: 50000      # Maximum total position exposure
+  
+  # Logging and monitoring
+  log_trades: true                          # Whether to log all trades
+  log_level: "INFO"                         # DEBUG, INFO, WARNING, ERROR, CRITICAL

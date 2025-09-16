@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiger Options Trading Service</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐅</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐅</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff7b00 0%, #ff9500 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff7b00 0%, #ff9500 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 123, 0, 0.2);
+            border-color: #ff7b00;
+        }
+
+        .feature-card .icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #ff7b00;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .quick-links {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .quick-links h2 {
+            color: #ff7b00;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .link-item:hover {
+            background: #ff7b00;
+            color: white;
+            transform: translateX(5px);
+            border-color: #e66a00;
+        }
+
+        .link-item .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .link-item .text {
+            flex: 1;
+        }
+
+        .link-item .title {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .link-item .desc {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .api-info {
+            background: #e8f4fd;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .api-info h3 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .api-endpoint {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            margin: 5px 0;
+            border-left: 3px solid #007bff;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        .footer p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .footer .version {
+            color: #ff7b00;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #dc3545;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐅 Tiger Options Trading Service</h1>
+            <p>基于FastAPI的老虎证券期权交易微服务</p>
+            <p>TradingView信号接收 • 期权交易自动化 • 多账户管理</p>
+            
+            <div id="statusBadges">
+                <div class="loading">🔄 正在加载服务状态...</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">📡</div>
+                    <h3>Webhook信号接收</h3>
+                    <p>完全兼容TradingView和deribit_webhook格式，支持实时交易信号接收和处理</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h3>期权交易自动化</h3>
+                    <p>智能期权合约选择，自动化下单执行，支持多种期权交易策略</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">👥</div>
+                    <h3>多账户管理</h3>
+                    <p>支持多个老虎证券账户配置，独立管理，灵活切换</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🛡️</div>
+                    <h3>风险管理</h3>
+                    <p>完善的风险控制机制，仓位管理，Delta风险监控</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🔧</div>
+                    <h3>Mock模式</h3>
+                    <p>开发测试模式，模拟交易环境，安全测试策略</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">📈</div>
+                    <h3>实时监控</h3>
+                    <p>实时数据监控，交易记录，完整的日志和监控系统</p>
+                </div>
+            </div>
+
+            <div class="quick-links">
+                <h2>🚀 快速访问</h2>
+                <div class="links-grid">
+                    <a href="/static/delta-manager.html" class="link-item">
+                        <div class="icon">🎯</div>
+                        <div class="text">
+                            <div class="title">Delta管理器</div>
+                            <div class="desc">期权仓位和Delta风险管理界面</div>
+                        </div>
+                    </a>
+
+                    <a href="/docs" class="link-item">
+                        <div class="icon">📚</div>
+                        <div class="text">
+                            <div class="title">API文档</div>
+                            <div class="desc">完整的API接口文档和测试</div>
+                        </div>
+                    </a>
+
+                    <a href="/health" class="link-item">
+                        <div class="icon">💚</div>
+                        <div class="text">
+                            <div class="title">健康检查</div>
+                            <div class="desc">服务健康状态和系统信息</div>
+                        </div>
+                    </a>
+
+                    <a href="/api/accounts" class="link-item">
+                        <div class="icon">👤</div>
+                        <div class="text">
+                            <div class="title">账户管理</div>
+                            <div class="desc">查看和管理交易账户</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="api-info">
+                <h3>🔗 核心API端点</h3>
+                <div class="api-endpoint">POST /webhook/signal - TradingView信号接收 (deribit兼容)</div>
+                <div class="api-endpoint">POST /webhook/signal/{account_name} - 指定账户信号接收</div>
+                <div class="api-endpoint">GET /api/accounts - 获取账户列表</div>
+                <div class="api-endpoint">GET /api/trading/positions/{account_name} - 获取持仓信息</div>
+                <div class="api-endpoint">GET /health - 健康检查</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Tiger Options Trading Service</p>
+            <p class="version">Version 1.0.0</p>
+            <p>基于 FastAPI • 老虎证券 • TradingView</p>
+        </div>
+    </div>
+
+    <script>
+        // 加载服务状态
+        async function loadServiceStatus() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                
+                const statusBadges = document.getElementById('statusBadges');
+                
+                if (response.ok) {
+                    statusBadges.innerHTML = `
+                        <span class="status-badge">✅ 服务正常</span>
+                        <span class="status-badge">🔧 ${data.environment || 'Unknown'} 环境</span>
+                        <span class="status-badge">📊 Mock模式: ${data.mock_mode ? '启用' : '禁用'}</span>
+                    `;
+                } else {
+                    statusBadges.innerHTML = `
+                        <span class="status-badge">❌ 服务异常</span>
+                    `;
+                }
+            } catch (error) {
+                const statusBadges = document.getElementById('statusBadges');
+                statusBadges.innerHTML = `
+                    <span class="status-badge">⚠️ 连接失败</span>
+                `;
+            }
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            loadServiceStatus();
+        });
+    </script>
+</body>
+</html>

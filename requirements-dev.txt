@@ -1,0 +1,38 @@
+# Include base requirements
+-r requirements.txt
+
+# Development and Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+pytest-xdist==3.5.0
+
+# Code Quality
+black==23.11.0
+flake8==6.1.0
+isort==5.12.0
+mypy==1.7.1
+pre-commit==3.6.0
+
+# Documentation
+mkdocs==1.5.3
+mkdocs-material==9.4.8
+mkdocs-mermaid2-plugin==1.1.1
+
+# Debugging
+ipdb==0.13.13
+pdbpp==0.10.3
+
+# Performance Profiling
+py-spy==0.3.14
+memory-profiler==0.61.0
+
+# Security
+bandit==1.7.5
+safety==2.3.5
+
+# Type Checking
+types-PyYAML==6.0.12.12
+types-requests==2.31.0.10
+types-python-dateutil==2.8.19.14

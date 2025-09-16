@@ -1,0 +1,11 @@
+{
+  "signal_id": "test_signal_001",
+  "symbol": "AAPL",
+  "action": "buy",
+  "quantity": 100,
+  "price": 150.50,
+  "order_type": "limit",
+  "time_in_force": "day",
+  "strategy": "test_strategy",
+  "comment": "Test webhook signal"
+}
